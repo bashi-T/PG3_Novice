@@ -1,10 +1,13 @@
 #pragma once
 #include<Vector2.h>
+#include<Novice.h>
 class Player 
 {
 public:
 	Player();
 	~Player();
+	void Initialize();
+	void Update();
 	void PlayerMove(float vectorX, float vectorY);
 	void BulletMove(float vectorX, float vectorY);
 	void SetPosition(float pos, float number);
