@@ -5,6 +5,9 @@ class Player
 public:
 	Player();
 	~Player();
+	void Init();
+	void Update();
+	void Draw();
 	void PlayerMove(float vectorX, float vectorY);
 	void BulletMove(float vectorX, float vectorY);
 	void SetPosition(float pos, float number);
