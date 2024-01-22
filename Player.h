@@ -1,6 +1,6 @@
 #pragma once
-#include<Vector2.h>
 #include<Novice.h>
+
 class Player 
 {
 public:
@@ -8,42 +8,28 @@ public:
 	~Player();
 	void Initialize();
 	void Update();
-	void PlayerMove(float vectorX, float vectorY);
-	void BulletMove(float vectorX, float vectorY);
-	void SetPosition(float pos, float number);
-	void SetBulletPosition(float pos, float number);
-	void SetIsShot(int i);
-	Vector2 GetPosition() { return Position; }
-	Vector2 GetSpeed() { return Speed; }
+	void Draw();
 
 private:
 	struct Bullet
 	{
-		float PosX = 600;
-		float PosY = 300;
-		float Speed = 10;
-		int IsShot = 0;
-	}bullet;
+		float PosX;
+		float PosY;
+		float Speed;
+		int IsShot;
+	} bullet = {0.0f, 0.0f, 0.0f, 0};
+	struct Vector2
+	{
+		float x;
+		float y;
+	} Position = {0.0f, 0.0f};
+
+	Vector2 Speed = {10.0f, 10.0f};
+	float PosX = 600.0f;
 
 public:
 	Bullet GetBullet() { return bullet; }
-
-private:
-	float PosX = 600;
-	float PosY = 300;
-	Vector2 Position
-	{
-		PosX,
-		PosY
-	};
-
-	float velX = 10;
-	float velY = 10;
-	Vector2 Speed
-	{
-		velX,
-		velY
-	};
-
+	Vector2 GetPosition() { return Position; }
+	Vector2 GetSpeed() { return Speed; }
 
 };

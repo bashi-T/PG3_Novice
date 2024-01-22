@@ -1,6 +1,5 @@
 #pragma once
 #include "IScene.h"
-#include "InputManager.h"
 
 class ClearScene : public IScene {
 public:
@@ -9,5 +8,4 @@ public:
 	void Draw() override;
 
 private:
-	InputManager* inputManager_;
 };

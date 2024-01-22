@@ -1,12 +1,26 @@
 #pragma once
-class Enemy
-{
+#include <Novice.h>
+
+class Enemy {
 public:
 	Enemy();
 	~Enemy();
 
-	void Move();
+	void Initialize();
+	void Update();
+	void Draw();
 
-	private:
+private:
+	//float PosX = 0;
+	//float PosY = 0;
+	struct Vector2
+	{
+		float x;
+		float y;
+	} Position = { 30.0f, 30.0f };
+
+	int enespd = 5;
+public:
+	Vector2 GetPosition() { return Position; }
 
 };

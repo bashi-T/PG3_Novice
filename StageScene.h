@@ -1,6 +1,7 @@
 #pragma once
 #include "IScene.h"
-#include "InputManager.h"
+#include"Player.h"
+#include"Enemy.h"
 
 class StageScene : public IScene {
 public:
@@ -9,5 +10,9 @@ public:
 	void Draw() override;
 
 private:
-	InputManager* inputManager_;
+	Player* player_ = nullptr;
+	Enemy* enemy_ = nullptr;
+	float DistX;
+	float DistY;
+	float DIST;
 };

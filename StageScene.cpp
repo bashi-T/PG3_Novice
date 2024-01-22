@@ -1,11 +1,27 @@
 #include "StageScene.h"
 
-void StageScene::Initialize() {}
+void StageScene::Initialize()
+{
+	player_->Initialize();
+	enemy_->Initialize();
+}
 
 void StageScene::Update() {
-	if (inputManager_->GetPreKeys()[DIK_SPACE] == 0 && inputManager_->GetKeys()[DIK_SPACE]) {
-		SceneNo = CLEAR;
+	player_->Update();
+	enemy_->Update();
+	DistX = player_->GetBullet().PosX - enemy_->GetPosition().x;
+	DistY = player_->GetBullet().PosY - enemy_->GetPosition().y;
+
+	DIST = DistY * DistY + DistX * DistX;
+	if (DIST <= 900 && DIST >= -900)
+	{
+		sceneNo = CLEAR;
 	}
 }
 
-void StageScene::Draw() {}
+void StageScene::Draw()
+{
+	player_->Draw();
+	enemy_->Draw();
+	Novice::ScreenPrintf(0, 0, "STAGESCENE");
+}

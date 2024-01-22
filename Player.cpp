@@ -4,100 +4,96 @@ Player::Player() {}
 
 Player::~Player() {}
 
-void Player::Initialize() {}
-
-void Player::Update() {
-	if (keys[DIK_SPACE] && preKeys[DIK_SPACE] == 0) {
-		player->SetIsShot(1);
-	}
-
-	if (player->GetBullet().PosY <= -25) {
-		player->SetIsShot(0);
-	}
-
-	if (keys[DIK_A]) {
-		player->PlayerMove(-player->GetSpeed().x, 0);
-	}
-	if (keys[DIK_D]) {
-		player->PlayerMove(player->GetSpeed().x, 0);
-	}
-	if (keys[DIK_W]) {
-		player->PlayerMove(0, -player->GetSpeed().y);
-	}
-	if (keys[DIK_S]) {
-		player->PlayerMove(0, player->GetSpeed().y);
-	}
-
-	if (player->GetPosition().x >= 1260 && keys[DIK_D]) {
-		player->SetPosition(player->GetPosition().x, 1260);
-	}
-	if (player->GetPosition().y >= 700 && keys[DIK_S]) {
-		player->SetPosition(player->GetPosition().y, 700);
-	}
-	if (player->GetPosition().x <= 20 && keys[DIK_A]) {
-		player->SetPosition(player->GetPosition().x, 20);
-	}
-	if (player->GetPosition().y <= 20 && keys[DIK_W]) {
-		player->SetPosition(player->GetPosition().y, 20);
-	}
-
-	DistX = player->GetBullet().PosX - enemyX;
-	DistY = player->GetBullet().PosY - enemyY;
-
-	enemyX += enespd;
-	DIST = DistY * DistY + DistX * DistX;
-	if (DIST <= 900 && DIST >= -900) {
-		// bulletshot = 2;
-	}
-	// if (bulletshot == 2) {
-	//	respown += -1;
-	// }
-	// if (respown == 0 && enemyX <= playerX)
-	//{
-	//	enespd = -10;
-	// }
-	// if (respown == 0 && enemyX > playerX)
-	//{
-	//	enespd = 10;
-	// }
-	// if (respown == 0)
-	//{
-	//	bulletshot = 0;
-	//	respown = 120;
-	// }
-
-	if (player->GetBullet().IsShot == 0) {
-		player->SetBulletPosition(player->GetBullet().PosY, player->GetPosition().y + 10.0f);
-		player->SetBulletPosition(player->GetBullet().PosX, player->GetPosition().x);
-	}
-	if (player->GetBullet().IsShot == 1) {
-		player->BulletMove(0, -player->GetBullet().Speed);
-	}
-	if (enemyX == 1260) {
-		enespd = -5;
-	}
-	if (enemyX == 20) {
-		enespd = 5;
-	}
-	// if (bulletshot == 2) {
-	//	enespd = 0;
-	// }
-}
-
-void Player::PlayerMove(float vectorX, float vectorY)
+void Player::Initialize()
 {
-	Position.x += vectorX;
-	Position.y += vectorY;
+	PosX = 600.0f;
+	float PosY = 300.0f;
+	Position.x = PosX;
+	Position.y = PosY;
+	Speed = {10.0f, 10.0f};
+	bullet.IsShot = 0;
+	bullet.PosX = Position.x;
+	bullet.PosY = Position.y;
+	bullet.Speed = 100.0f;
 }
 
-void Player::BulletMove(float vectorX, float vectorY) {
-	bullet.PosX += vectorX;
-	bullet.PosY += vectorY;
+void Player::Update()
+{
+	char keys[256] = {0};
+	char preKeys[256] = {0};
+	memcpy(preKeys, keys, 256);
+	Novice::GetHitKeyStateAll(keys);
+	if (keys[DIK_SPACE] &&
+		preKeys[DIK_SPACE] == 0)
+	{
+		bullet.IsShot = 1;
+	}
+
+	if (bullet.PosY <= -25) {
+		bullet.IsShot = 0;
+		bullet.PosX = Position.x;
+		bullet.PosY = Position.y;
+	}
+
+	if (keys[DIK_A])
+	{
+		Position.x -= Speed.x;
+	}
+	if (keys[DIK_D])
+	{
+		Position.x += Speed.x;
+	}
+	if (keys[DIK_W]) 
+	{
+		Position.y -= Speed.y;
+	}
+	if (keys[DIK_S])
+	{
+		Position.y += Speed.y;
+	}
+
+	if (Position.x >= 1260 && keys[DIK_D])
+	{
+		Position.x = 1260;
+	}
+	if (Position.y >= 700 && keys[DIK_S])
+	{
+		Position.y = 700;
+	}
+	if (Position.x <= 20 && keys[DIK_A])
+	{
+		Position.x = 20;
+	}
+	if (Position.y <= 20 && keys[DIK_W])
+	{
+		Position.y = 20;
+	}
+
+
+	if (bullet.IsShot == 1)
+	{
+		bullet.PosY += bullet.Speed;
+	}
 }
 
-void Player::SetPosition(float pos, float number) { pos = number; }
-
-void Player::SetBulletPosition(float pos, float number) { pos = number; }
-
-void Player::SetIsShot(int i) { bullet.IsShot = i; }
+void Player::Draw()
+{
+	if (bullet.IsShot == 1)
+	{
+		Novice::DrawEllipse(
+		    int(bullet.PosX),
+			int(bullet.PosY),
+			10,
+			10,
+			0.0f,
+			0xFFFFFFFF,
+		    kFillModeSolid);
+	}
+	Novice::DrawTriangle(
+	    int(Position.x), int(Position.y),
+		int(Position.x + 20), int(Position.y + 40),
+	    int(Position.x - 20), int(Position.y + 40),
+	    0xFF0000FF,
+	    kFillModeSolid);
+}
 

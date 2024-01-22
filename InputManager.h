@@ -1,5 +1,6 @@
 #pragma once
 #include<Novice.h>
+
 class InputManager
 {
 public:
@@ -13,4 +14,5 @@ public:
 private:
 	char keys[256] = {0};
 	char preKeys[256] = {0};
+
 };

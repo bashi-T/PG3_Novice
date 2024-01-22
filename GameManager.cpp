@@ -1,31 +1,39 @@
 #include "GameManager.h"
 
-GameManager::GameManager() {
+GameManager::GameManager()
+{
+	//inputManager_->Initialize();
 	sceneArr_[TITLE] = std::make_unique<TitleScene>(); 
 	sceneArr_[STAGE] = std::make_unique<StageScene>();
 	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
+
+	currentSceneNo_ = TITLE;
 }
 
 GameManager::~GameManager() {}
 
-int GameManager::run()
+int GameManager::Run()
 {
+	char keys[256] = {0};
+	char preKeys[256] = {0};
 	while (Novice::ProcessMessage() == 0)
 	{
 		Novice::BeginFrame();
-		inputManager_->Update();
+	memcpy(preKeys, keys, 256);
+	Novice::GetHitKeyStateAll(keys);
 		prevSceneNo_ = currentSceneNo_;
 		currentSceneNo_ = sceneArr_[currentSceneNo_]->GetSceneNo();
 		if (prevSceneNo_ != currentSceneNo_)
 		{
 			sceneArr_[currentSceneNo_]->Initialize();
 		}
+
 		sceneArr_[currentSceneNo_]->Update();
 		sceneArr_[currentSceneNo_]->Draw();
 
 		Novice::EndFrame();
-		if (inputManager_->GetPreKeys()[DIK_SPACE] == 0 &&
-		    inputManager_->GetKeys()[DIK_SPACE] != 0)
+		if (preKeys[DIK_ESCAPE] == 0 &&
+		    keys[DIK_ESCAPE] != 0)
 		{
 			break;
 		}

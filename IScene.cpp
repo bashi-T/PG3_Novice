@@ -1,3 +1,9 @@
 #include "IScene.h"
-int IScene::SceneNo = TITLE;
+
+int IScene::sceneNo = TITLE;
+
 IScene::~IScene() {}
+
+int IScene::GetSceneNo() { return sceneNo; }
+
+//IScene::IScene() {}
