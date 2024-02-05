@@ -11,13 +11,12 @@ public:
 	void Draw();
 
 private:
-	//float PosX = 0;
-	//float PosY = 0;
 	struct Vector2
 	{
 		float x;
 		float y;
-	} Position = { 30.0f, 30.0f };
+	};
+	Vector2 Position = { 30.0f, 30.0f };
 
 	int enespd = 5;
 public:

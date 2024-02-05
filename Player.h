@@ -1,35 +1,33 @@
 #pragma once
 #include<Novice.h>
+#include<Vector2.h>
 
-class Player 
+class Player
 {
+private:
+	Vector2 Position;
+
+	Vector2 Speed;
+
+	float PosX = 600.0f;
+	float PosY = 300.0f;
+
+	struct Bullet
+	{
+		Vector2 Pos;
+		float Speed;
+		int IsShot;
+	};
+	Bullet bullet;
 public:
 	Player();
 	~Player();
+
 	void Initialize();
 	void Update();
 	void Draw();
 
-private:
-	struct Bullet
-	{
-		float PosX;
-		float PosY;
-		float Speed;
-		int IsShot;
-	} bullet = {0.0f, 0.0f, 0.0f, 0};
-	struct Vector2
-	{
-		float x;
-		float y;
-	} Position = {0.0f, 0.0f};
-
-	Vector2 Speed = {10.0f, 10.0f};
-	float PosX = 600.0f;
-
-public:
-	Bullet GetBullet() { return bullet; }
-	Vector2 GetPosition() { return Position; }
-	Vector2 GetSpeed() { return Speed; }
-
+	const Bullet& GetBullet()const { return bullet; }
+	const Vector2& GetPosition()const { return Position; }
+	const Vector2& GetSpeed()const { return Speed; }
 };

@@ -2,6 +2,8 @@
 
 void StageScene::Initialize()
 {
+	player_ = new Player;
+	enemy_ = new Enemy;
 	player_->Initialize();
 	enemy_->Initialize();
 }
@@ -9,8 +11,8 @@ void StageScene::Initialize()
 void StageScene::Update() {
 	player_->Update();
 	enemy_->Update();
-	DistX = player_->GetBullet().PosX - enemy_->GetPosition().x;
-	DistY = player_->GetBullet().PosY - enemy_->GetPosition().y;
+	DistX = player_->GetBullet().Pos.x - enemy_->GetPosition().x;
+	DistY = player_->GetBullet().Pos.y - enemy_->GetPosition().y;
 
 	DIST = DistY * DistY + DistX * DistX;
 	if (DIST <= 900 && DIST >= -900)

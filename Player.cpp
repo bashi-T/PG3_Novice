@@ -1,20 +1,26 @@
 #include "Player.h"
 
-Player::Player() {}
+Player::Player()
+	//:Position({ 600.0f,300.0f })
+	//,Speed({ 10.0f,0.0f })
+	//,bullet({ {600.0f,300.0f},10.0f,0 })
+{}
 
 Player::~Player() {}
 
 void Player::Initialize()
 {
 	PosX = 600.0f;
-	float PosY = 300.0f;
-	Position.x = PosX;
-	Position.y = PosY;
-	Speed = {10.0f, 10.0f};
+	PosY = 300.0f;
+	Position = {
+		PosX,
+		PosY
+	};
+	Speed.x=10.0f;
 	bullet.IsShot = 0;
-	bullet.PosX = Position.x;
-	bullet.PosY = Position.y;
-	bullet.Speed = 100.0f;
+	bullet.Pos.x = Position.x;
+	bullet.Pos.y = Position.y;
+	bullet.Speed = -20.0f;
 }
 
 void Player::Update()
@@ -29,10 +35,10 @@ void Player::Update()
 		bullet.IsShot = 1;
 	}
 
-	if (bullet.PosY <= -25) {
+	if (bullet.Pos.y <= -25) {
 		bullet.IsShot = 0;
-		bullet.PosX = Position.x;
-		bullet.PosY = Position.y;
+		bullet.Pos.x = Position.x;
+		bullet.Pos.y = Position.y;
 	}
 
 	if (keys[DIK_A])
@@ -72,7 +78,7 @@ void Player::Update()
 
 	if (bullet.IsShot == 1)
 	{
-		bullet.PosY += bullet.Speed;
+		bullet.Pos.y += bullet.Speed;
 	}
 }
 
@@ -81,8 +87,8 @@ void Player::Draw()
 	if (bullet.IsShot == 1)
 	{
 		Novice::DrawEllipse(
-		    int(bullet.PosX),
-			int(bullet.PosY),
+		    int(bullet.Pos.x),
+			int(bullet.Pos.y),
 			10,
 			10,
 			0.0f,
