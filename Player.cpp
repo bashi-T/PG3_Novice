@@ -8,22 +8,26 @@ void Player::Init() {}
 
 void Player::Update() {}
 
-void Player::Draw() {}
-
-void Player::PlayerMove(float vectorX, float vectorY)
+void Player::Draw()
 {
-	Position.x += vectorX;
-	Position.y += vectorY;
+	Novice::DrawTriangle(
+		int(Position.x),
+		int(Position.y),
+		int(Position.x + 20),
+		int(Position.y + 40),
+		int(Position.x - 20),
+		int(Position.y + 40),
+		0xFF0000FF,
+		kFillModeSolid);
 }
 
-void Player::BulletMove(float vectorX, float vectorY) {
-	bullet.PosX += vectorX;
-	bullet.PosY += vectorY;
+void Player::MoveRight()
+{
+	this->Position.x += this->Speed.x;
 }
 
-void Player::SetPosition(float pos, float number) { pos = number; }
-
-void Player::SetBulletPosition(float pos, float number) { pos = number; }
-
-void Player::SetIsShot(int i) { bullet.IsShot = i; }
+void Player::MoveLeft()
+{
+	this->Position.x -= this->Speed.x;
+}
 
